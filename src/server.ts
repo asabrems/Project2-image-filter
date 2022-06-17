@@ -29,14 +29,14 @@ const path = require('path');
 
   /**************************************************************************** */
   app.get("/filteredimage/",
-  async (req, res) =>{
-        let {image_url} = req.query;
+  async (req:express.Request, res:express.Response) =>{
+        const { image_url } : { image_url: string } = req.query;;
 
         if (!image_url){
             res.status(400).send('url is required');
         }
         const filtered_path = await filterImageFromURL(image_url);
-        res.sendFile(filtered_path,(err)=>
+        res.status(200).sendFile(filtered_path,(err)=>
         {
         if(err){
             console.log("file cannot be seen")
@@ -51,7 +51,7 @@ const path = require('path');
   
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req:express.Request, res:express.Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
